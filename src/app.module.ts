@@ -1,8 +1,19 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
+import emailConfig from './config/emailConfig';
+import { validationSchema } from './config/validationSchema';
 
 @Module({
-  imports: [UsersModule],
+  imports: [
+    UsersModule,
+    ConfigModule.forRoot({
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
+      load: [emailConfig],
+      isGlobal: true,
+      validationSchema
+    })
+  ],
   controllers: [],
   providers: [],
 })
