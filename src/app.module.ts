@@ -1,20 +1,21 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as process from 'process';
+import authConfig from './config/authConfig';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
-import { TypeOrmModule } from "@nestjs/typeorm";
-import * as process from "process";
-import { LoggerMiddleware } from "./logger/logger.middleware";
-import { UsersController } from "./users/users.controller";
-import { Logger2Middleware } from "./logger/logger2.middleware";
+import { LoggerMiddleware } from './logger/logger.middleware';
+import { Logger2Middleware } from './logger/logger2.middleware';
+import { UsersController } from './users/users.controller';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     UsersModule,
     ConfigModule.forRoot({
       envFilePath: [`.env.${process.env.NODE_ENV}`],
-      load: [emailConfig],
+      load: [emailConfig, authConfig],
       isGlobal: true,
       validationSchema
     }),
