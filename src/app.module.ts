@@ -1,7 +1,9 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { utilities, WinstonModule } from 'nest-winston';
 import * as process from 'process';
+import * as winston from 'winston';
 import authConfig from './config/authConfig';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
@@ -29,6 +31,17 @@ import { UsersModule } from './users/users.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV !== 'prod',
     }),
+    // WinstonModule.forRoot({
+    //   transports: [
+    //     new winston.transports.Console({
+    //       level: process.env.NODE_EVN === 'prod' ? 'info' : 'silly',
+    //       format: winston.format.combine(
+    //         winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+    //         utilities.format.nestLike('MyApp', { prettyPrint: true }),
+    //       ),
+    //     }),
+    //   ],
+    // }),
   ],
   controllers: [],
   providers: [],
